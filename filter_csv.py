@@ -17,6 +17,13 @@ def main():
     parser.add_argument("value", help="the value to match")
 
     args = parser.parse_args()
+    with open(args.filename, newline ="") as file:
+        reader = csv.reader(file)
+        header = next(reader)
+        coloumn_index = header.index(args.column)
+        for row in reader:
+            if row [column_index] == args.value:
+                print(",".join(row))
 
     # TODO: open args.filename and read it with csv.reader. The first row is the
     #   header. Find the position of args.column within the header, then print every

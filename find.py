@@ -10,13 +10,22 @@ import argparse
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Print the lines of a file that contain a given pattern.")
+     description="Print the lines of a file that contain a given pattern.")
     parser.add_argument("pattern", help="the text to look for")
     parser.add_argument("filename", help="the file to search")
-    # TODO: add an optional flag -i / --ignore-case  (use action="store_true")
+    parser.add_argument("-i", "--ignore-case", action="store_true")
 
     args = parser.parse_args()
-
+    with open(args.filename) as file:
+        for number, line in enumerate(file, start = 1):
+            text = line.rstrip()
+            if args.ignore_case:
+                matches = args.pattern.lower() in text.lower()
+            else:
+                matches = args.pattern in text
+            if matches:
+                print(f"{number}: {text}")
+ 
     # TODO: open args.filename and read its lines. For each line, numbered starting
     #   at 1, print "<number>: <line>" when the line contains args.pattern.
     #   If the --ignore-case flag was given, match without caring about upper/lower
